@@ -56,7 +56,7 @@ public class AtividadeController {
 	@GetMapping("/atividade/lista")
 	public String listaAtividade(Model model) {
 		
-		if(!info.hasRole("ROLE_VOLUNTARIO"))
+		if(info.hasRole("ROLE_VOLUNTARIO"))
 			model.addAttribute("hospitais", hospital.getAllActive());
 		
 		model.addAttribute("acoes", ongs.getAcoesAtivas());
@@ -88,7 +88,8 @@ public class AtividadeController {
 		}
 		
 		model.addAttribute("rodada", Global.rodadaRandomica());
-		model.addAttribute("hospitais", hospital.getAllActive());
+		if(info.hasRole("ROLE_VOLUNTARIO"))
+			model.addAttribute("hospitais", hospital.getAllActive());
 		model.addAttribute("acoes", ongs.getAcoesAtivas());
 		model.addAttribute("fila", service.getFilaAtividade(agenda));
 		model.addAttribute("agenda", agenda);
